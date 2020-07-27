@@ -12,7 +12,6 @@
 </template>
 
 <script>
-import api from '../../service';
 import Card from '../../components/Card'
 
 export default {
@@ -32,7 +31,7 @@ export default {
   },
   methods: {
     getCharacters(page = 1) {
-      api.get(`/character?page=${page}`)
+      this.$http.get(`/character?page=${page}`)
       .then(response => {
         const { results, info } = response.data;
         this.characters = results;
@@ -43,7 +42,7 @@ export default {
     },
     handleSearch(search, page = 1) {
       this.search = search;
-      api.get(`/character/?page=${page}&name=${search}`)
+      this.$http.get(`/character/?page=${page}&name=${search}`)
         .then(response => {
           const { results, info } = response.data;
           this.characters = results;

@@ -1,8 +1,10 @@
+import Vue from 'vue';
 import axios from 'axios';
 
-const api = axios.create({
-  baseURL: 'https://rickandmortyapi.com/api/'
-})
-
-export default api;
-
+Vue.use({
+  install(Vue) {
+    Vue.prototype.$http = axios.create({
+      baseURL: 'https://rickandmortyapi.com/api/'
+    })
+  }
+});
