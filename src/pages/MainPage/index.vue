@@ -1,6 +1,6 @@
 <template>
     <div>
-      <Search v-model='search' :handleSearch='handleSearch'/>
+      <input type='search' @input="handleSearch($event.target.value)" v-model="search"/>
       <div v-for="character in characters" :key="character.id">
         <Card :character='character'/>
       </div>
@@ -13,12 +13,11 @@
 
 <script>
 import api from '../../service';
-import Search from '../../components/Search';
 import Card from '../../components/Card'
 
 export default {
   name: 'MainPage',
-  components: { Search, Card },
+  components: { Card },
   data() {
     return {
       search: '',
@@ -43,6 +42,7 @@ export default {
       .catch(error => console.log(error))
     },
     handleSearch(search, page = 1) {
+      this.search = search;
       api.get(`/character/?page=${page}&name=${search}`)
         .then(response => {
           const { results, info } = response.data;
@@ -55,14 +55,12 @@ export default {
     },
     prevPage() {
       if (this.page === 1) return;
-
       const pageNumber =  this.page - 1;
       this.filter ? this.handleSearch(this.search, pageNumber) :
       this.getCharacters(pageNumber);
     },
     nextPage() {
       if (this.page === this.charactersInfo.pages) return;
-
       const pageNumber =  this.page + 1;
       this.filter ? this.handleSearch(this.search, pageNumber) :
       this.getCharacters(pageNumber);

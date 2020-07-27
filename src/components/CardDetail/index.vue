@@ -15,7 +15,11 @@
 <script>
 export default {
   name: 'CardDetail',
-  props: { character: Object }
+  props: { 
+    character: {
+      type: Object 
+    }
+  }
 }
 </script>
 
